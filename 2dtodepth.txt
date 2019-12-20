@@ -1,0 +1,4 @@
+https://colab.research.google.com
+
+%cd /content/drive/My Drive/2dtodepth
+!python 2dtodepth.py --input=single_view
