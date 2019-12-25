@@ -1,5 +1,9 @@
 https://colab.research.google.com
 
+from google.colab import files
+%cd /content/2dtodepth/infile
+uploaded = files.upload()
+
 %cd /content/drive/My Drive/2dtodepth
 or
 %cd 2dtodepth/
