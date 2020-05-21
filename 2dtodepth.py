@@ -44,12 +44,15 @@ print('TESTING ON VIDEO')
 
 model.switch_to_eval()
 
+
 def main():
-	for i, data in enumerate(video_dataset):
-#	    print(i)
-	    stacked_img = data[0]
-	    targets = data[1]
-	    model.run_and_save_DAVIS(stacked_img, targets, save_path, video_list)
+    # 	for i, data in enumerate(video_dataset):
+    # #	    print(i)
+    # 	    stacked_img = data[0]
+    # 	    targets = data[1]
+    # 	    model.run_and_save_DAVIS(stacked_img, targets, save_path, video_list)
+    torch.save(model, 'loaded_model.pt')
+
 
 if __name__ == '__main__':
     main()
