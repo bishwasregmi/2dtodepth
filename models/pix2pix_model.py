@@ -710,7 +710,7 @@ class Pix2PixModel(base_model.BaseModel):
             imsave(output_path, saved_imgs)
 
 
-    def run_and_save_DAVIS_mod(self, input_,h,w, save_path, input_dir):
+    def run_and_save_DAVIS_mod(self, input_,h,w):
         input_imgs = autograd.Variable(input_.cuda(), requires_grad=False)
 
         stack_inputs = input_imgs
@@ -722,22 +722,20 @@ class Pix2PixModel(base_model.BaseModel):
         print("pred_d = " , pred_d.shape)
         pred_d_ref = pred_d.data[0, :, :].cpu().numpy()
 
-        output_path = save_path
-
-        input_path = input_dir + 'photo.jpg'
-        img = imread(input_path, plugin='matplotlib')
-        img = transform.rotate(img, 0, resize=True, center=None)
-        h = img.shape[0]
-        w = img.shape[1]
+        input_path = '/content/2dtodepth/photo.jpg'
+        # img = imread(input_path, plugin='matplotlib')
+        # img = transform.rotate(img, 0, resize=True, center=None)
+        # h = img.shape[0]
+        # w = img.shape[1]
         disparity = 1. / pred_d_ref
         disparity = disparity / np.max(disparity)
         disparity = np.tile(np.expand_dims(disparity, axis=-1), (1, 1, 3))
         disparity = transform.resize(disparity, (h, w))
-        if self.bw == 0:
-            saved_imgs = np.concatenate((img, disparity), axis=1)
-        else:
-            saved_imgs = np.concatenate((img, (1.0 - disparity)), axis=1)
-        saved_imgs = (saved_imgs * 255).astype(np.uint8)
+        # if self.bw == 0:
+        #     saved_imgs = np.concatenate((img, disparity), axis=1)
+        # else:
+        #     saved_imgs = np.concatenate((img, (1.0 - disparity)), axis=1)
+        saved_imgs = (disparity * 255).astype(np.uint8)
 
         # imsave(output_path, saved_imgs)
         return(saved_imgs)
