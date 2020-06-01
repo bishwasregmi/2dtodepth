@@ -720,7 +720,7 @@ class Pix2PixModel(base_model.BaseModel):
         pred_d = torch.exp(pred_log_d)
 
 
-        pred_d_ref = pred_d.data[0, :, :].cpu().numpy()
+        pred_d_ref = pred_d.data.cpu().numpy()
 
         output_path = save_path
 
