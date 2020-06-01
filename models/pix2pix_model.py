@@ -684,7 +684,7 @@ class Pix2PixModel(base_model.BaseModel):
 
             saved_img = np.transpose(
                 input_imgs[i, :, :, :].cpu().numpy(), (1, 2, 0))
-            print("pred_d = " , pred_d)
+            print("pred_d = " , pred_d.shape)
             pred_d_ref = pred_d.data[i, :, :].cpu().numpy()
 
             output_path = youtube_dir + '/' + \
@@ -719,7 +719,7 @@ class Pix2PixModel(base_model.BaseModel):
         pred_log_d = prediction_d.squeeze(1)
         pred_d = torch.exp(pred_log_d)
 
-        print("pred_d = " , pred_d)
+        print("pred_d = " , pred_d.shape)
         pred_d_ref = pred_d.data[0, :, :].cpu().numpy()
 
         output_path = save_path
