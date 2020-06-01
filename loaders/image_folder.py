@@ -312,6 +312,8 @@ class DAVISImageFolder(data.Dataset):
         rotate = self.rotation_exif_info(img_path)
         img = imread(img_path, plugin='matplotlib')
         img = transform.rotate(img, rotate, resize=True, center=None)
+        print("rotate in image_folder.load_imgs() is :")
+        print(rotate)
 #        print(img.dtype)
         h=img.shape[0]
         w=img.shape[1]

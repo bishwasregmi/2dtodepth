@@ -24,10 +24,10 @@ opt = TrainOptions().parse()  # set CUDA_VISIBLE_DEVICES before import torch
 video_list = 'infile/'
 save_path = 'outfile'
 eval_num_threads = 2
-video_data_loader = aligned_data_loader.DAVISDataLoader(video_list, BATCH_SIZE)
-video_dataset = video_data_loader.load_data()
-print('========================= Video dataset #images = %d =========' %
-      len(video_data_loader))
+# video_data_loader = aligned_data_loader.DAVISDataLoader(video_list, BATCH_SIZE)
+# video_dataset = video_data_loader.load_data()
+# print('========================= Video dataset #images = %d =========' %
+#       len(video_data_loader))
 
 model = pix2pix_model.Pix2PixModel(opt)
 
