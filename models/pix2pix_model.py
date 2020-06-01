@@ -675,6 +675,8 @@ class Pix2PixModel(base_model.BaseModel):
 
         for i in range(0, len(targets['img_1_path'])):
 
+            print("i : ", i)
+
 #            youtube_dir = save_path + targets['img_1_path'][i].split('/')[-2]
             youtube_dir = save_path
             if not os.path.exists(youtube_dir):
