@@ -722,15 +722,20 @@ class Pix2PixModel(base_model.BaseModel):
 
         pred_d_ref = pred_d.data[0, :, :].cpu().numpy()
 
-        h = stack_inputs.shape[0]
-        w = stack_inputs.shape[1]
+        img = imread('photo.jpg', plugin='matplotlib')
+        h = img.shape[0]
+        w = img.shape[1]
         disparity = 1. / pred_d_ref
         disparity = disparity / np.max(disparity)
         disparity = np.tile(np.expand_dims(disparity, axis=-1), (1, 1, 3))
         disparity = transform.resize(disparity, (h, w))
-        disparity = (disparity * 255).astype(np.uint8)
+        if self.bw == 0:
+            saved_imgs = np.concatenate((img, disparity), axis=1)
+        else:
+            saved_imgs = np.concatenate((img, (1.0 - disparity)), axis=1)
+        saved_imgs = (saved_imgs * 255).astype(np.uint8)
 
-        imsave('photo.jpg', disparity)
+        imsave('photo.jpg', saved_imgs)
 
     def switch_to_train(self):
         self.netG.train()
