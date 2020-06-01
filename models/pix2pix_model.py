@@ -728,7 +728,7 @@ class Pix2PixModel(base_model.BaseModel):
 
 
             rotate = self.rotation_exif_info('photo.jpg')
-            img = imread('photo.jpg', plugin='matplotlib')
+            img = imread('/content/2dtodepth/photo.jpg', plugin='matplotlib')
             img = transform.rotate(img, rotate, resize=True, center=None)
             h = img.shape[0]
             w = img.shape[1]
@@ -742,7 +742,7 @@ class Pix2PixModel(base_model.BaseModel):
                 saved_imgs = np.concatenate((img, (1.0 - disparity)), axis=1)
             saved_imgs = (saved_imgs * 255).astype(np.uint8)
 
-            imsave('photo.jpg', saved_imgs)
+            imsave('/content/2dtodepth/photo.jpg', saved_imgs)
 
     def switch_to_train(self):
         self.netG.train()
