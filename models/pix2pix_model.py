@@ -710,7 +710,7 @@ class Pix2PixModel(base_model.BaseModel):
 
     def run_and_save_DAVIS_mod(self, input_):
         targets = {'img_1_path': ['photo.jpg']}
-        save_path = '/content/2dtodepth/'
+        save_path = '/content/2dtodepth'
         input_dir = '/content/2dtodepth/'
         input_imgs = autograd.Variable(input_.cuda(), requires_grad=False)
 
