@@ -710,7 +710,7 @@ class Pix2PixModel(base_model.BaseModel):
             imsave(output_path, saved_imgs)
 
 
-    def run_and_save_DAVIS_mod(self, input_, save_path, input_dir):
+    def run_and_save_DAVIS_mod(self, input_,h,w, save_path, input_dir):
         input_imgs = autograd.Variable(input_.cuda(), requires_grad=False)
 
         stack_inputs = input_imgs
@@ -739,7 +739,8 @@ class Pix2PixModel(base_model.BaseModel):
             saved_imgs = np.concatenate((img, (1.0 - disparity)), axis=1)
         saved_imgs = (saved_imgs * 255).astype(np.uint8)
 
-        imsave(output_path, saved_imgs)
+        # imsave(output_path, saved_imgs)
+        return(saved_imgs)
 
     def switch_to_train(self):
         self.netG.train()
