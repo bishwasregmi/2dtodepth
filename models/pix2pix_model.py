@@ -709,6 +709,9 @@ class Pix2PixModel(base_model.BaseModel):
 
 
     def run_and_save_DAVIS_mod(self, input_):
+        targets = {'img_1_path': ['photo.jpg']}
+        save_path = '/content/2dtodepth/'
+        input_dir = '/content/2dtodepth/'
         input_imgs = autograd.Variable(input_.cuda(), requires_grad=False)
 
         stack_inputs = input_imgs
@@ -717,18 +720,28 @@ class Pix2PixModel(base_model.BaseModel):
         pred_log_d = prediction_d.squeeze(1)
         pred_d = torch.exp(pred_log_d)
 
-        targets = {'img_1_path': ['photo.jpg']}
+        if not os.path.exists(save_path):
+            os.makedirs(save_path)
+
         for i in range(0, len(targets['img_1_path'])):
 
+            #            youtube_dir = save_path + targets['img_1_path'][i].split('/')[-2]
+            youtube_dir = save_path
+            if not os.path.exists(youtube_dir):
+                os.makedirs(youtube_dir)
 
             saved_img = np.transpose(
                 input_imgs[i, :, :, :].cpu().numpy(), (1, 2, 0))
 
             pred_d_ref = pred_d.data[i, :, :].cpu().numpy()
 
+            output_path = youtube_dir + '/' + \
+                          targets['img_1_path'][i].split('/')[-1]
 
-            rotate = self.rotation_exif_info('photo.jpg')
-            img = imread('/content/2dtodepth/photo.jpg', plugin='matplotlib')
+            input_path = input_dir + targets['img_1_path'][i]
+            print(input_path + '  --->  ' + output_path)
+            rotate = self.rotation_exif_info(input_path)
+            img = imread(input_path, plugin='matplotlib')
             img = transform.rotate(img, rotate, resize=True, center=None)
             h = img.shape[0]
             w = img.shape[1]
@@ -742,7 +755,7 @@ class Pix2PixModel(base_model.BaseModel):
                 saved_imgs = np.concatenate((img, (1.0 - disparity)), axis=1)
             saved_imgs = (saved_imgs * 255).astype(np.uint8)
 
-            imsave('/content/2dtodepth/photo.jpg', saved_imgs)
+            imsave(output_path, saved_imgs)
 
     def switch_to_train(self):
         self.netG.train()
