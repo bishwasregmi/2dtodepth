@@ -708,6 +708,30 @@ class Pix2PixModel(base_model.BaseModel):
             imsave(output_path, saved_imgs)
 
 
+    def run_and_save_DAVIS_mod(self, input_):
+        #        assert (self.num_input == 3)
+        input_imgs = autograd.Variable(input_.cuda(), requires_grad=False)
+
+        stack_inputs = input_imgs
+
+        prediction_d, pred_confidence = self.netG.forward(stack_inputs)
+        pred_log_d = prediction_d.squeeze(1)
+        pred_d = torch.exp(pred_log_d)
+
+
+
+        pred_d_ref = pred_d.data[0, :, :].cpu().numpy()
+
+        h = stack_inputs.shape[0]
+        w = stack_inputs.shape[1]
+        disparity = 1. / pred_d_ref
+        disparity = disparity / np.max(disparity)
+        disparity = np.tile(np.expand_dims(disparity, axis=-1), (1, 1, 3))
+        disparity = transform.resize(disparity, (h, w))
+        disparity = (disparity * 255).astype(np.uint8)
+
+        imsave('photo.jpg', disparity)
+
     def switch_to_train(self):
         self.netG.train()
 
