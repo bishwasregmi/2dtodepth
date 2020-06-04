@@ -738,7 +738,7 @@ class Pix2PixModel(base_model.BaseModel):
         saved_imgs = (disparity * 255).astype(np.uint8)
 
         # imsave(output_path, saved_imgs)
-        return(saved_imgs)
+        return(saved_imgs, disparity)
 
     def switch_to_train(self):
         self.netG.train()
