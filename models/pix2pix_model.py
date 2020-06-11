@@ -735,6 +735,14 @@ class Pix2PixModel(base_model.BaseModel):
         #     saved_imgs = np.concatenate((img, disparity), axis=1)
         # else:
         #     saved_imgs = np.concatenate((img, (1.0 - disparity)), axis=1)
+        x = [238, 72, 652, 463, 668, 303, 74, 567, 384, 498, 186, 330, 268]
+        y = [289, 191, 226, 192, 78, 103, 65, 61, 43, 55, 117, 28, 35]
+
+        for i in range(x):
+            print("depth at object i: ", disparity[x[i], y[i],0])
+
+        print()
+
         saved_imgs = (disparity * 255).astype(np.uint8)
 
         # imsave(output_path, saved_imgs)
