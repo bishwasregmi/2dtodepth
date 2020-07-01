@@ -36,11 +36,11 @@ torch.backends.cudnn.benchmark = True
 best_epoch = 0
 global_step = 0
 
-print(
-    '=================================  BEGIN VALIDATION ====================================='
-)
-
-print('TESTING ON VIDEO')
+# print(
+#     '=================================  BEGIN VALIDATION ====================================='
+# )
+#
+# print('TESTING ON VIDEO')
 
 model.switch_to_eval()
 
@@ -52,6 +52,7 @@ def main():
     # 	    targets = data[1]
     # 	    model.run_and_save_DAVIS(stacked_img, targets, save_path, video_list)
     torch.save(model, 'loaded_model.pt')
+    print("Model with pretrained weights saved as loaded_model.pt")
 
 
 if __name__ == '__main__':
